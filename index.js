@@ -45,82 +45,35 @@ window.addEventListener('load', async() => {
 
 
 
-  fileListLength = await callStatic('getFileLength',[]);
+  // fileListLength = await callStatic('getFileLength',[]);
   
-  console.log('Files Length: ', fileListLength);
+  // console.log('Files Length: ', fileListLength);
 
-  for(let i = 1; i < fileListLength + 1; i++){
-    const getFileList = await callStatic('get_file_by_index', [i]);
-    fileListArr.push({
-      index_counter:i,
-      name:getFileList.name,
-      id:getFileList.id,
-      description:getFileList.description,
-      createdAt:new Date(getFileList.createdAt),
-      owner:getFileList.author,
-      updatedAt:getFileList.updatedAt,
-      file_hash:getFileList.file_hash
-    })
-  }
+  // for(let i = 1; i < fileListLength + 1; i++){
+  //   const getFileList = await callStatic('get_file_by_index', [i]);
+  //   fileListArr.push({
+  //     index_counter:i,
+  //     name:getFileList.name,
+  //     id:getFileList.id,
+  //     description:getFileList.description,
+  //     createdAt:new Date(getFileList.createdAt),
+  //     owner:getFileList.author,
+  //     updatedAt:getFileList.updatedAt,
+  //     file_hash:getFileList.file_hash
+  //   })
+  // }
   renderFileList();  
   $("#loader").hide();
 });
 
-document.addEventListener('DOMContentLoaded', async () => {
-    // const node = await Ipfs.create({ repo: 'ipfs-' + Math.random() })
-  const node = await IpfsHttpClient({
-      host: 'ipfs.infura.io',
-      port: 5001,
-      protocol: 'https',
-      // headers: {
-      //   authorization: 'Bearer ' + TOKEN
-      // }
-  })
-  console.log(node)
-    window.node = node
-    // const status = node.isOnline() ? 'online' : 'offline'
-    // console.log(`Node status: ${status}`)
-    // document.getElementById('status').innerHTML = `Node status: ${status}`
-    // You can write more code here to use it. Use methods like
-    // node.add, node.get. See the API docs here:
-    // https://github.com/ipfs/interface-ipfs-core
-  })
-var buffer = null
-// async function addFile(){
-//     var file = document.getElementById('file')
-//     console.log(file.val())
-// }
 window.addEventListener('load', async()=>{
   client = await Ae.Aepp();
   
 })
 $('#addFile').click(async function(event){
-  var name = ($("#name").val())
-  var description =($("#description").val())
-  var new_file = document.getElementById("fileInput")
-  // console.log(new_file.files[0])
-  var file = new_file.files[0]
-  const reader = new window.FileReader()
-  reader.readAsArrayBuffer(file)
-  reader.onloadend = () =>{
-    var buffer =Buffer(reader.result)
-      // var fileAdded = await node.add(buffer)
-      console.log(buffer)
-      
-    var fileAdded = node.add(buffer, (error, result) => {
-      console.log("Result:", result)
-      if(error){
-        console.error("error", error)
-        return;
-      }
-      result.forEach(async (file) => {
-          console.log("successfully stored", file.hash)
-          const new_file = await contractCall('add_file', [name, description, file.hash],0);
-          console.log(new_file)
-      });
-    })
+  $("#loader").show();
   
-  }
+  $("#loader").hide();
   
   
   event.preventDefault();
